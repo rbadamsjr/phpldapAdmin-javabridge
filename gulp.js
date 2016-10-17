@@ -14,3 +14,12 @@ gulp.task('example', function () {
       }
     }))
 })
+
+gulp.task('build',shell.task([
+    'jar cp ./phpldapadmin-1.2.3 ./explodedJavabridgeWar'
+    'jar -cvf phpldapAdminBridge.war ./explodedJavabridgeWar'
+]))
+
+gulp.task('setup',function(){
+
+})
