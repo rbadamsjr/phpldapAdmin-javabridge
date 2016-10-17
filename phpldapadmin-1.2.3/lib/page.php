@@ -128,9 +128,8 @@ class page {
 		printf('<link type="text/css" rel="stylesheet" href="%s" />',$this->_app['urlcss']);
 
 		# Add Bootstrap and new css here
-		printf('<link rel="stylesheet" href="bower_components/bootswatch-dist/css/bootstrap.min.css">',$this->_app['urlcss']);
-    printf('<link rel="stylesheet" href="css/main.css">',$this->_app['urlcss']);
-    printf('<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">',$this->_app['urlcss']);
+		printf('<link rel="stylesheet" href="../bower_components/bootswatch-dist/css/bootstrap.min.css">',$this->_app['urlcss']);
+    printf('<link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">',$this->_app['urlcss']);
 
 		if (defined('JSDIR')) {
 			printf('<link type="text/css" rel="stylesheet" media="all" href="%sjscalendar/calendar-blue.css" title="blue" />',JSDIR);
@@ -139,9 +138,9 @@ class page {
 			printf('<script type="text/javascript" src="%sjscalendar/calendar.js"></script>',JSDIR);
 
 			# ADD Javascript files here
-			printf('<script src="bower_components/respond/dest/respond.min.js"></script>',JSDIR);
-			printf('<script src="bower_components/jquery/jquery.min.js"></script>',JSDIR);
-			printf('<script src="bower_components/bootswatch-dist/js/bootstrap.min.js"></script>',JSDIR);
+			printf('<script src="../bower_components/respond/dest/respond.min.js"></script>',JSDIR);
+			printf('<script src="../bower_components/jquery/jquery.min.js"></script>',JSDIR);
+			printf('<script src="../bower_components/bootswatch-dist/js/bootstrap.min.js"></script>',JSDIR);
 			echo "\n";
 		}
 
@@ -410,6 +409,7 @@ class page {
 		# Start of body
 		# Page Header
 		echo '<body>';
+		echo '<div class="container-fluid">';
 		echo "\n";
 		echo '<table class="page" border="0" width="100%">';
 
@@ -452,6 +452,7 @@ class page {
 
 		# Finish HTML
 		echo '</table>';
+		echo '</div>';
 		echo '</body>';
 		echo '</html>';
 
