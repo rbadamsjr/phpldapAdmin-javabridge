@@ -1,0 +1,22 @@
+{
+  "name": "phpldap-admin-bridge",
+  "version": "1.0.0",
+  "description": "A fork of phpldapadmin-1.2.3 embedded in javabridge.war",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbadamsjr/phpldapAdmin-javabridge.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rbadamsjr/phpldapAdmin-javabridge/issues"
+  },
+  "homepage": "https://github.com/rbadamsjr/phpldapAdmin-javabridge#readme",
+  "devDependencies": {
+    "gulp-shell": "^0.5.2"
+  }
+}

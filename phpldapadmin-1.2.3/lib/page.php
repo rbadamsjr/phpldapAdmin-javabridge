@@ -104,6 +104,12 @@ class page {
 		echo '<head>';
 		printf('<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
 
+		# Custom meta info
+    printf('<meta http-equiv="X-UA-Compatible" content="IE=11,chrome=1">');
+    printf('<meta name="description" content="">');
+    printf('<meta name="viewport" content="width=device-width, initial-scale=1">');
+    printf('<link rel="apple-touch-icon" href="apple-touch-icon.png">');
+
 		$DNs = get_request('dn','REQUEST');
 		if (is_array($DNs))
 			$DNs = '';
@@ -121,11 +127,21 @@ class page {
 		# Style sheet.
 		printf('<link type="text/css" rel="stylesheet" href="%s" />',$this->_app['urlcss']);
 
+		# Add Bootstrap and new css here
+		printf('<link rel="stylesheet" href="bower_components/bootswatch-dist/css/bootstrap.min.css">',$this->_app['urlcss']);
+    printf('<link rel="stylesheet" href="css/main.css">',$this->_app['urlcss']);
+    printf('<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">',$this->_app['urlcss']);
+
 		if (defined('JSDIR')) {
 			printf('<link type="text/css" rel="stylesheet" media="all" href="%sjscalendar/calendar-blue.css" title="blue" />',JSDIR);
 			echo "\n";
 			printf('<script type="text/javascript" src="%sajax_functions.js"></script>',JSDIR);
 			printf('<script type="text/javascript" src="%sjscalendar/calendar.js"></script>',JSDIR);
+
+			# ADD Javascript files here
+			printf('<script src="bower_components/respond/dest/respond.min.js"></script>',JSDIR);
+			printf('<script src="bower_components/jquery/jquery.min.js"></script>',JSDIR);
+			printf('<script src="bower_components/bootswatch-dist/js/bootstrap.min.js"></script>',JSDIR);
 			echo "\n";
 		}
 
@@ -147,6 +163,7 @@ class page {
 		else
 			$pagetitle = '';
 
+		# Update the Page header to use bootstrap navigation
 		echo '<tr class="pagehead">';
 
 		echo '<td colspan="3"><div id="ajHEAD"><table width="100%" border="0"><tr>';
@@ -298,7 +315,7 @@ class page {
 
 		# Add the Session System Messages
 		if (isset($_SESSION['sysmsg']) && is_array($_SESSION['sysmsg'])) {
-			foreach ($_SESSION['sysmsg'] as $msg) 
+			foreach ($_SESSION['sysmsg'] as $msg)
 				$this->setsysmsg($msg);
 
 			unset($_SESSION['sysmsg']);
@@ -375,7 +392,7 @@ class page {
 			'TREE'=>true,
 			'FOOT'=>true
 		);
-		
+
 		if ($_SESSION[APPCONFIG]->getValue('appearance','minimalMode')) {
 			$display = array(
 				'HEAD'=>false,
