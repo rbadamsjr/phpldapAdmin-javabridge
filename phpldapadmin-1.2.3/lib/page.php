@@ -163,30 +163,53 @@ class page {
 			$pagetitle = '';
 
 		# Update the Page header to use bootstrap navigation
-		echo '<tr class="pagehead">';
-
-		echo '<td colspan="3"><div id="ajHEAD"><table width="100%" border="0"><tr>';
-		printf('<td style="text-align: left;"><a href="%s" onclick="target=\'_blank\';"><img src="%s" alt="Logo" class="logo" /></a></td>',get_href('sf'),$this->_app['logo']);
-
-		echo '<td class="imagetop">';
-		$empty = true;
-		if (function_exists('cmd_control_pane'))
-			foreach (cmd_control_pane('top') as $cmddetails)
-				if ((isset($cmddetails['enable']) && $cmddetails['enable']) || ! isset($cmddetails['enable'])) {
-					if (! $empty)
-						echo ' ';
-
-					printf('<a %s>%s</a>',$cmddetails['link'],$cmddetails['image']);
-
-					$empty = false;
-				}
-
-		if ($empty)
-			echo '&nbsp;';
-
-		echo '</td>';
-		echo '</tr></table></div></td>';
-		echo '</tr>';
+echo '		<nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavbarController">';
+echo '    <div class="container">';
+echo '        <div class="navbar-header">';
+echo '            <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">';
+echo '                <span class="sr-only">Toggle navigation</span>';
+echo '                <span class="icon-bar"></span>';
+echo '                <span class="icon-bar"></span>';
+echo '                <span class="icon-bar"></span>';
+echo '            </button>';
+printf('            <a class="navbar-brand"><img src="%s" style="margin-top: -10px;"></a>',$this->_app['logo']);
+echo '        <!--    <a href="#/" class="navbar-brand">phpLDAPAdmin</a> -->';
+echo '        </div>';
+echo '        <div class="collapse navbar-collapse" uib-collapse="navCollapsed">';
+echo '            <ul class="nav navbar-nav">';
+echo '            </ul>';
+echo '            <ul class="nav navbar-nav navbar-right">';
+echo '                <li><a href=#/logs><i class="fa fa-" aria-hidden="true"></i>&nbsp;Home</a></li>';
+echo '                <li><a href=#/ingest><i class="fa fa-" aria-hidden="true"></i>&nbsp;Purge cache</a></li>';
+echo '                <li><a href ng-click="getHelp()"><i class="fa fa-" aria-hidden="true"></i>&nbsp;Show Caches</a></li>';
+echo '            </ul>';
+echo '        </div>';
+echo '    </div>';
+echo '</nav>';
+		// echo '<tr class="pagehead">';
+		//
+		// echo '<td colspan="3"><div id="ajHEAD"><table width="100%" border="0"><tr>';
+		// printf('<td style="text-align: left;"><a href="%s" onclick="target=\'_blank\';"><img src="%s" alt="Logo" class="logo" /></a></td>',get_href('sf'),$this->_app['logo']);
+		//
+		// echo '<td class="imagetop">';
+		// $empty = true;
+		// if (function_exists('cmd_control_pane'))
+		// 	foreach (cmd_control_pane('top') as $cmddetails)
+		// 		if ((isset($cmddetails['enable']) && $cmddetails['enable']) || ! isset($cmddetails['enable'])) {
+		// 			if (! $empty)
+		// 				echo ' ';
+		//
+		// 			printf('<a %s>%s</a>',$cmddetails['link'],$cmddetails['image']);
+		//
+		// 			$empty = false;
+		// 		}
+		//
+		// if ($empty)
+		// 	echo '&nbsp;';
+		//
+		// echo '</td>';
+		// echo '</tr></table></div></td>';
+		// echo '</tr>';
 		echo "\n";
 	}
 
@@ -321,9 +344,14 @@ class page {
 		}
 
 		if (isset($this->sysmsg)) {
-			echo '<table class="sysmsg">';
-			$this->sysmsg();
-			echo '</table>';
+			// echo '<table class="sysmsg">';
+			// $this->sysmsg();
+			// echo '</table>';
+			echo '<div class="row">';
+			echo '<p>';
+	#		$this->sysmsg();
+			echo '</p>';
+			echo '</div>';
 			echo "\n";
 		}
 
@@ -336,7 +364,21 @@ class page {
 		if (defined('DEBUG_ENABLED') && DEBUG_ENABLED && (($fargs=func_get_args())||$fargs='NOARGS'))
 			debug_log('Entered (%%)',129,0,__FILE__,__LINE__,__METHOD__,$fargs);
 
-		printf('<tr class="foot"><td><small>%s</small></td><td colspan="2"><div id="ajFOOT">%s</div>%s</td></tr>',
+		// printf('<tr class="foot"><td><small>%s</small></td><td colspan="2"><div id="ajFOOT">%s</div>%s</td></tr>',
+		// 	isCompress() ? '[C]' : '&nbsp;',
+		// 	app_version(),
+		// 	get_href('logo') ? sprintf('<a href="%s"><img src="%s" alt="SourceForge.net Logo" style="border: 0px;" /></a>',get_href('sf'),get_href('logo')) : '&nbsp;');
+ 		printf('<footer class="footer">
+	      <div class="container">
+					<div class="row">
+						<div class="col-sm-6 col-md-6">
+	        		<span class="text-muted">Smart Ideals, llc</span>
+						</div>
+						<div class="col-sm-6 col-md-6 text-right">
+	        		<span>%s</span><span id="ajFoot" style="color: black;"><strong>%s</strong></span><span>%s</span>
+						</div>
+	      </div>
+	    </footer>',
 			isCompress() ? '[C]' : '&nbsp;',
 			app_version(),
 			get_href('logo') ? sprintf('<a href="%s"><img src="%s" alt="SourceForge.net Logo" style="border: 0px;" /></a>',get_href('sf'),get_href('logo')) : '&nbsp;');
@@ -411,47 +453,70 @@ class page {
 		echo '<body>';
 		echo '<div class="container-fluid">';
 		echo "\n";
-		echo '<table class="page" border="0" width="100%">';
+#		echo '<table class="page" border="0" width="100%">';
+
+#		echo '<div class="page col-sm-9 col-md-10 col-md-offset-2" border="0" width="100%">';
 
 		if ($display['HEAD'])
 			$this->head_print();
 
-		# Control Line
-		if ($display['CONTROL']) {
-			echo '<tr class="control"><td colspan="3">';
-			echo '<div id="ajCONTROL">';
-			$this->control_print();
-			echo '</div></td></tr>';
-			echo "\n";
-		}
+// 		# Control Line
+// 		if ($display['CONTROL']) {
+// 	#		echo '<tr class="control"><td colspan="3">';
+// 			echo '<div id="ajCONTROL">';
+// 			$this->control_print();
+// #			echo '</div></td></tr>';
+// 			echo '</div>';
+// 			echo '</div>';
+// 			echo "\n";
+// 		}
 
 		# Left Block
-		echo '<tr>';
+		echo '<div class="col-sm-3 col-md-2 sidebar" style="padding-top: 30px;">';
+#		echo '<tr>';
 
 		if ($display['TREE']) {
-			echo '<td class="tree" colspan="2">';
-			printf('<acronym title="%s"><img src="%s/plus.png" alt="" style="float: right;" onclick="if (document.getElementById(\'ajTREE\').style.display == \'none\') { document.getElementById(\'ajTREE\').style.display = \'block\' } else { document.getElementById(\'ajTREE\').style.display = \'none\' };"/></acronym>',_('Hide/Unhide the tree'),IMGDIR);
+			// echo '<td class="tree" colspan="2">';
+			// printf('<acronym title="%s"><img src="%s/plus.png" alt="" style="float: right;" onclick="if (document.getElementById(\'ajTREE\').style.display == \'none\') { document.getElementById(\'ajTREE\').style.display = \'block\' } else { document.getElementById(\'ajTREE\').style.display = \'none\' };"/></acronym>',_('Hide/Unhide the tree'),IMGDIR);
+			// echo '<div id="ajTREE">';
+			// $this->tree();
+			// echo '</div>';
+			// echo '</td>';
+
+	#		echo '<td class="tree" colspan="2">';
+	#		printf('<acronym title="%s"><img src="%s/plus.png" alt="" style="float: right;" onclick="if (document.getElementById(\'ajTREE\').style.display == \'none\') { document.getElementById(\'ajTREE\').style.display = \'block\' } else { document.getElementById(\'ajTREE\').style.display = \'none\' };"/></acronym>',_('Hide/Unhide the tree'),IMGDIR);
 			echo '<div id="ajTREE">';
 			$this->tree();
 			echo '</div>';
-			echo '</td>';
+	#		echo '</td>';
+			echo '</div>';
 		}
 
-		echo '<td class="body" style="width: 80%;">';
-		echo '<div id="ajBODY">';
+		// echo '<td class="body" style="width: 80%;">';
+		// echo '<div id="ajBODY">';
+		// echo "\n";
+		// $this->body();
+		// echo '</div>';
+		// echo '</td>';
+		// echo '</tr>';
+		// echo "\n";
+
+		echo '<div class="col-sm-9 col-md-10 col-md-offset-2 main" id="ajBODY">';
 		echo "\n";
 		$this->body();
 		echo '</div>';
-		echo '</td>';
-		echo '</tr>';
+		// echo '</td>';
+		// echo '</tr>';
 		echo "\n";
+		echo '</div>';
+		echo '</div>';
 
 		# Page Footer
 		if ($display['FOOT'])
 			$this->footer_print();
 
 		# Finish HTML
-		echo '</table>';
+	#	echo '</table>';
 		echo '</div>';
 		echo '</body>';
 		echo '</html>';
@@ -523,7 +588,8 @@ class block {
 				$output .= sprintf('<tr><td class="head">%s</td></tr>',$this->title);
 
 			if (isset($this->body))
-				$output .= sprintf('<tr><td>%s</td></tr>',$this->body);
+		#		$output .= sprintf('<tr><td>%s</td></tr>',$this->body);
+				$output .= sprintf('<div>%s</div>',$this->body);
 
 			if (isset($this->footer))
 				$output .= sprintf('<tr><td class="foot">%s</td></tr>',$this->foot);
